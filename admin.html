@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h2>Admin Panel</h2>
+    <p class="muted" id="user-name"></p>
+    <nav>
+      <button class="nav active" data-page="dashboard">Dashboard</button>
+      <button class="nav" data-page="customers">Customers</button>
+      <button class="nav" data-page="transactions">Transactions</button>
+      <button class="nav" data-page="statistics">Statistics</button>
+      <button class="nav" data-page="reports">Reports</button>
+    </nav>
+    <button class="btn secondary" id="logout">Log out</button>
+  </aside>
+
+  <main class="content">
+    <p class="message" id="global-message" role="alert"></p>
+
+    <div class="filters" id="filter-bar">
+      <label>From <input type="date" id="f-start"></label>
+      <label>To <input type="date" id="f-end"></label>
+      <label>Customer <select id="f-customer"><option value="">All customers</option></select></label>
+      <button class="btn" id="f-apply">Apply filters</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <section id="page-dashboard" class="page">
+      <h1>Dashboard</h1>
+      <div class="cards">
+        <div class="card"><span>Registered customers</span><strong id="k-customers">-</strong></div>
+        <div class="card"><span>Active customers</span><strong id="k-active">-</strong></div>
+        <div class="card"><span>Total income</span><strong id="k-income">-</strong></div>
+        <div class="card"><span>Total expenses</span><strong id="k-expenses">-</strong></div>
+        <div class="card"><span>Total recorded savings</span><strong id="k-savings">-</strong></div>
+        <div class="card"><span>Avg customer income</span><strong id="k-avg-income">-</strong></div>
+        <div class="card"><span>Avg customer expenses</span><strong id="k-avg-expenses">-</strong></div>
+        <div class="card"><span>Highest expense</span><strong id="k-highest">-</strong></div>
+      </div>
+      <div class="chart" id="c-monthly"></div>
+      <div class="chart" id="c-trend"></div>
+      <div class="chart" id="c-pie"></div>
+      <div class="chart" id="c-top"></div>
+      <div class="chart" id="c-income"></div>
+      <div class="chart" id="c-hist"></div>
+    </section>
+
+    <!-- CUSTOMERS -->
+    <section id="page-customers" class="page" hidden>
+      <h1>Customer Management</h1>
+      <div class="filters">
+        <label>Search by name or email <input type="text" id="c-search"></label>
+        <button class="btn" id="c-search-btn">Search</button>
+      </div>
+      <div id="table-customers"></div>
+      <div id="customer-detail" class="detail" hidden></div>
+    </section>
+
+    <!-- TRANSACTIONS -->
+    <section id="page-transactions" class="page" hidden>
+      <h1>Financial Monitoring</h1>
+      <div class="filters">
+        <label>Type
+          <select id="t-type">
+            <option value="">All</option><option>Income</option><option>Expense</option><option>Saving</option>
+          </select>
+        </label>
+        <a class="btn secondary" id="t-download" href="#">Download CSV</a>
+      </div>
+      <p class="muted">Use the date and customer filters above, then click Apply filters.</p>
+      <div id="table-transactions"></div>
+    </section>
+
+    <!-- STATISTICS -->
+    <section id="page-statistics" class="page" hidden>
+      <h1>Statistical Analysis of Expenses</h1>
+      <div id="stats-cards" class="cards"></div>
+      <h2>How to read this</h2>
+      <ul id="stats-notes"></ul>
+      <div class="chart" id="s-hist"></div>
+      <h2>Customer-wise expense totals</h2>
+      <div id="table-per-customer"></div>
+    </section>
+
+    <!-- REPORTS -->
+    <section id="page-reports" class="page" hidden>
+      <h1>Reports</h1>
+      <p class="muted">Reports use the filters above. Click Apply filters after changing them.</p>
+      <h2>Monthly report <a class="btn secondary small" id="dl-monthly" href="#">Download CSV</a></h2>
+      <div id="table-r-monthly"></div>
+      <h2>Customer financial summary <a class="btn secondary small" id="dl-customers" href="#">Download CSV</a></h2>
+      <div id="table-r-customers"></div>
+      <h2>Expense category report <a class="btn secondary small" id="dl-categories" href="#">Download CSV</a></h2>
+      <div id="table-r-categories"></div>
+    </section>
+  </main>
+</div>
+<script src="{{ url_for('static', filename='common.js') }}"></script>
+<script src="{{ url_for('static', filename='admin.js') }}"></script>
+</body>
+</html>

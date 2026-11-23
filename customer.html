@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Finances</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h2>My Finances</h2>
+    <p class="muted" id="user-name"></p>
+    <nav>
+      <button class="nav active" data-page="dashboard">Dashboard</button>
+      <button class="nav" data-page="income">Add Income</button>
+      <button class="nav" data-page="expense">Add Expense</button>
+      <button class="nav" data-page="savings">Savings</button>
+      <button class="nav" data-page="history">Transaction History</button>
+    </nav>
+    <button class="btn secondary" id="logout">Log out</button>
+  </aside>
+
+  <main class="content">
+    <p class="message" id="global-message" role="alert"></p>
+
+    <!-- DASHBOARD -->
+    <section id="page-dashboard" class="page">
+      <h1>Dashboard</h1>
+      <div class="cards">
+        <div class="card"><span>Total income</span><strong id="kpi-income">-</strong></div>
+        <div class="card"><span>Total expenses</span><strong id="kpi-expenses">-</strong></div>
+        <div class="card"><span>Net savings</span><strong id="kpi-net">-</strong></div>
+        <div class="card"><span>Savings %</span><strong id="kpi-pct">-</strong></div>
+        <div class="card"><span>Recorded savings</span><strong id="kpi-recorded">-</strong></div>
+        <div class="card"><span>Highest spending category</span><strong id="kpi-top-category">-</strong></div>
+        <div class="card"><span>Average monthly expenses</span><strong id="kpi-avg-month">-</strong></div>
+      </div>
+      <p class="muted">Net savings = Income - Expenses (calculated). Recorded savings are deposits you added, tracked separately.</p>
+      <div class="chart" id="chart-monthly"></div>
+      <div class="chart" id="chart-trend"></div>
+      <div class="chart" id="chart-pie"></div>
+      <h2>Monthly financial summary</h2>
+      <div id="table-monthly"></div>
+    </section>
+
+    <!-- ADD INCOME -->
+    <section id="page-income" class="page" hidden>
+      <h1>Add Income</h1>
+      <form id="income-form" class="form">
+        <label>Income source
+          <select name="source">
+            <option>Salary</option><option>Freelance</option><option>Business</option><option>Other</option>
+          </select>
+        </label>
+        <label>Amount (₹) <input type="number" name="amount" min="0.01" step="0.01" required></label>
+        <label>Date <input type="date" name="date" class="date-input" required></label>
+        <label>Description <input type="text" name="description" maxlength="255"></label>
+        <button type="submit" class="btn">Save income</button>
+        <p class="message" role="alert"></p>
+      </form>
+    </section>
+
+    <!-- ADD EXPENSE -->
+    <section id="page-expense" class="page" hidden>
+      <h1>Add Expense</h1>
+      <form id="expense-form" class="form">
+        <label>Category
+          <select name="category">
+            <option>Food</option><option>Rent</option><option>Shopping</option><option>Travel</option>
+            <option>Education</option><option>Healthcare</option><option>Entertainment</option><option>Other</option>
+          </select>
+        </label>
+        <label>Amount (₹) <input type="number" name="amount" min="0.01" step="0.01" required></label>
+        <label>Date <input type="date" name="date" class="date-input" required></label>
+        <label>Payment method
+          <select name="payment_method">
+            <option>UPI</option><option>Cash</option><option>Credit Card</option>
+            <option>Debit Card</option><option>Net Banking</option>
+          </select>
+        </label>
+        <label>Description <input type="text" name="description" maxlength="255"></label>
+        <button type="submit" class="btn">Save expense</button>
+        <p class="message" role="alert"></p>
+      </form>
+    </section>
+
+    <!-- SAVINGS -->
+    <section id="page-savings" class="page" hidden>
+      <h1>Savings</h1>
+      <form id="saving-form" class="form">
+        <label>Goal name (for example: New Laptop)
+          <input type="text" name="goal" value="General" maxlength="100">
+        </label>
+        <label>Amount (₹) <input type="number" name="amount" min="0.01" step="0.01" required></label>
+        <label>Date <input type="date" name="date" class="date-input" required></label>
+        <button type="submit" class="btn">Save savings</button>
+        <p class="message" role="alert"></p>
+      </form>
+      <h2>Savings by goal</h2>
+      <div id="table-goals"></div>
+      <div class="chart" id="chart-goals"></div>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="page-history" class="page" hidden>
+      <h1>Transaction History</h1>
+      <div class="filters">
+        <label>From <input type="date" id="h-start"></label>
+        <label>To <input type="date" id="h-end"></label>
+        <label>Type
+          <select id="h-type">
+            <option value="">All</option><option>Income</option><option>Expense</option><option>Saving</option>
+          </select>
+        </label>
+        <button class="btn" id="h-apply">Apply filters</button>
+      </div>
+      <div id="table-history"></div>
+    </section>
+  </main>
+</div>
+<script src="{{ url_for('static', filename='common.js') }}"></script>
+<script src="{{ url_for('static', filename='customer.js') }}"></script>
+</body>
+</html>

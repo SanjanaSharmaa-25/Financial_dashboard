@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Dashboard - Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <h1>Financial Management &amp; Statistical Dashboard</h1>
+    <p class="muted">Track income, expenses and savings. Understand your money.</p>
+
+    <div class="tabs">
+      <button type="button" class="tab active" data-tab="customer-form">Customer Login</button>
+      <button type="button" class="tab" data-tab="register-form">Register</button>
+      <button type="button" class="tab" data-tab="admin-form">Admin Login</button>
+    </div>
+
+    <form id="customer-form" class="auth-form" data-role="Customer">
+      <label>Email <input type="email" name="email" required autocomplete="username"></label>
+      <label>Password <input type="password" name="password" required autocomplete="current-password"></label>
+      <button type="submit" class="btn">Log in</button>
+      <p class="message" role="alert"></p>
+    </form>
+
+    <form id="register-form" class="auth-form" hidden>
+      <label>Full name <input type="text" name="name" required minlength="2" maxlength="100"></label>
+      <label>Email <input type="email" name="email" required autocomplete="username"></label>
+      <label>Password (8+ characters, letters and numbers)
+        <input type="password" name="password" required minlength="8" maxlength="64" autocomplete="new-password">
+      </label>
+      <button type="submit" class="btn">Create account</button>
+      <p class="message" role="alert"></p>
+    </form>
+
+    <form id="admin-form" class="auth-form" data-role="Admin" hidden>
+      <label>Admin email <input type="email" name="email" required autocomplete="username"></label>
+      <label>Password <input type="password" name="password" required autocomplete="current-password"></label>
+      <button type="submit" class="btn">Log in as admin</button>
+      <p class="message" role="alert"></p>
+    </form>
+  </main>
+  <script src="{{ url_for('static', filename='common.js') }}"></script>
+  <script src="{{ url_for('static', filename='auth.js') }}"></script>
+</body>
+</html>

@@ -84,11 +84,11 @@ CUSTOMERS = [  # name, email, monthly salary, status
     ("Karan Mehta", "karan@example.com", 30000, "Blocked"),
 ]
 EXPENSE_RANGES = {  # category: (how many per month, min amount, max amount)
-    "Food": (5, 100, 600),
-    "Travel": (3, 80, 1500),
-    "Shopping": (2, 300, 4000),
-    "Entertainment": (1, 150, 1200),
-    "Healthcare": (1, 200, 2500),
+    "Food": (8, 150, 900),
+    "Travel": (4, 100, 2000),
+    "Shopping": (3, 400, 6000),
+    "Entertainment": (2, 200, 1800),
+    "Healthcare": (1, 300, 3500),
 }
 PAYMENTS = ["UPI", "UPI", "UPI", "Debit Card", "Credit Card", "Cash"]
 
@@ -172,7 +172,7 @@ def main():
         cur.execute(f"SELECT COUNT(*) FROM {table}")
         print(f"{table}: {cur.fetchone()[0]} rows")
     conn.close()
-    print("Done. Now run:  streamlit run app.py")
+    print("Done. Now run:  python app.py")
 
 
 if __name__ == "__main__":
